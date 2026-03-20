@@ -33,12 +33,6 @@ export default function Home() {
 
 	const socket = useMemo(() => io("http://localhost:3001"), []);
 
-	// useEffect(() => {
-	// 	if (userName) {
-	// 		socket.emit("register_user", userName);
-	// 	}
-	// }, [userName]);
-
 	useEffect(() => {
 		// If already connected, set it up immediately
 		if (socket.id) {
@@ -101,10 +95,6 @@ export default function Home() {
 
 	useEffect(() => {
 		socket.on("invite_to_chat", (data: ChatInvite) => {
-			// const { roomId, from } = data;
-			// console.log("Chat invite from", from);
-			// setroomId(roomId);
-			// setShowChat(true);
 			setInvite(data);
 			setPrivateRoomId(data.roomId);
 			setShowInviteModal(true);
@@ -113,7 +103,6 @@ export default function Home() {
 
 	useEffect(() => {
 		socket.on("private_chat_started", ({ roomId }) => {
-			// setroomId(roomId);
 			setPrivateRoomId(roomId);
 			setShowPrivateChatModal(true);
 		});
@@ -213,11 +202,11 @@ export default function Home() {
 						boxShadow: "0 0 20px rgba(0,0,0,0.3)"
 					}}>
 						<h2 style={{ marginBottom: "1rem" }}>
-							Zaproszenie do czatu
+							Private chat invitation
 						</h2>
 
 						<p style={{ marginBottom: "2rem" }}>
-							Użytkownik <b>{invite.from}</b> zaprasza Cię do rozmowy.
+							User <b>{invite.from}</b> invites you to a private chat!
 						</p>
 
 						<button
@@ -231,7 +220,7 @@ export default function Home() {
 								cursor: "pointer"
 							}}
 							>
-							Akceptuj
+							Accept
 						</button>
 
 						<button
@@ -244,7 +233,7 @@ export default function Home() {
 								cursor: "pointer"
 							}}
 							>
-							Odrzuć
+							Reject
 						</button>
 					</div>
 				</div>
@@ -274,11 +263,11 @@ export default function Home() {
 						boxShadow: "0 0 20px rgba(0,0,0,0.3)"
 					}}>
 						<h2 style={{ marginBottom: "1rem" }}>
-							Zaproszenie wysłane
+							Invitation sent!
 						</h2>
 
 						<p style={{ marginBottom: "2rem" }}>
-							Wysłałeś zaproszenie do <b>{inviteSentTo}</b>.
+							You sent an invitation to <b>{inviteSentTo}</b>.
 						</p>
 
 						<button
